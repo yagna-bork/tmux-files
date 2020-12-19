@@ -17,7 +17,7 @@ def get_file_paths():
     source_file_path = sys.argv[1]
     if not os.path.exists(source_file_path):
         raise_error("Source file doesn't exist")
-    compiled_file_path = source_file_path + ".ytmux"  # yagna tmux lol
+    compiled_file_path = source_file_path + ".ytmux"  # yagna tmux
     return source_file_path, compiled_file_path
 
 
