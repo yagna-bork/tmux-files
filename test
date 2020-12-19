@@ -1,0 +1,28 @@
+line="$(echo -e " \n\t")"
+##if [[ $line =~ "^(#.*)|([[:space:]\t]*)$" ]] 
+##then
+##	$worked
+##fi
+#
+#if [[ $line =~ "^#.*" ]]
+#then
+#	echo worked
+#else
+#	echo flopped
+#fi
+#echo $line
+
+#for str in "         "  "abc      " "" ;do
+#    if [[ $str =~ ^\ +$ ]] ;then 
+#      echo -e "Has length, and contain only whitespace  \"$str\"" 
+#    else 
+#      echo -e "Is either null or contain non-whitespace \"$str\" "
+#    fi
+#done
+
+if [[ -z `echo $line` ]]
+then
+	echo worked
+else
+	echo flopped
+fi

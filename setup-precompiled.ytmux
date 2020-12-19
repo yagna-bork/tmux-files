@@ -1,0 +1,2 @@
+#!/bin/bash
+tmux new-session \; split -h \; split -h \; split -h \; split -h \; select-layout main-vertical

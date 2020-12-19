@@ -1,0 +1,12 @@
+file=$1
+
+touch $1.sh
+count=0
+tail -n +2 $file | while read line
+do
+	if [[ "${line:0:1}" == "#" ]] || [[ $line =~ ^\ +$ ]]
+	then
+		break
+	fi
+	echo $line >> $1.sh	
+done

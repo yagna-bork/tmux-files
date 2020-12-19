@@ -1,0 +1,3 @@
+dev
+cd ~/smarkets/services/events/api
+kubectl exec -it -l app=events-api

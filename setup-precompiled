@@ -1,0 +1,35 @@
+#SESSION="smarkets-dev"
+
+#   ----------------------
+#   |          |     2    |			
+#   |    1     | ---------|
+#   |----------|     4    |
+#   |    3     | ---------|
+#   |          |     5    |
+#   ----------------------
+
+#tmux new-session \; \
+# 	send-keys 'dev; cd smarkets/services/events/event-manager; paver shell;' \; \
+#	send-keys Enter \; \
+# 	split-window -h \; \
+# 	selectp -t 1 \; \
+# 	send-keys 'dev; cd smarkets/services/events/api; paver shell;' \; \
+#	send-keys Enter \; \
+# 	split-window -h \; \
+
+new-session
+for 4: split -h
+select-layout main-vertical
+#for i in {1..5}
+#do
+#	tmux split -h \;
+#done
+
+#split -h x5
+#send C-a M-4
+#send key M-4
+#event-manager
+#split -h
+#select 1
+#api
+#select 3
