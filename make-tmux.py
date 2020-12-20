@@ -41,6 +41,28 @@ def expand_for_loops(code):
             expanded_code.append(line)
     return expanded_code
 
+def parse_pane_commands(code):
+    """
+    Parsed code of the format "pane-number: some-shell-command"
+
+    E.g. ["1: do this; do that; then this"] becomes [
+        select-pane -t 1,
+        send-keys "do this; do that; then this",
+        send-keys Enter,
+    ]
+    """
+    parsed_code = []
+    pane_command_pattern = re.compile("(?P<paneno>\d+): (?P<command>.+)")
+    for line in code:
+        if match := pane_command_pattern.match(line):
+            paneno, command = match.group("paneno"), match.group("command")
+            parsed_code.append(f"select-pane -t {paneno}")
+            parsed_code.append(f"send-keys \"{command}\"")
+            parsed_code.append(f"send-keys Enter")
+        else:
+            parsed_code.append(line)
+    return parsed_code
+
 
 source_file_path, compiled_file_path = get_file_paths()
 with open(source_file_path, 'r') as source_file, open(compiled_file_path, 'w+') as compiled_file:
@@ -53,6 +75,8 @@ with open(source_file_path, 'r') as source_file, open(compiled_file_path, 'w+') 
 
     source_code[0] = f"tmux {source_code[0]}"  # only first line needs to prepend cmd with tmux
     source_code = expand_for_loops(source_code)
+    source_code = parse_pane_commands(source_code)
+    # TODO allow for regular bash commands e.g. variable names, sleep commands
     compiled_code = "#!/bin/bash\n"  # always required for bash scripts obv
     line_seperator = r" \; "
     compiled_code += line_seperator.join(source_code)

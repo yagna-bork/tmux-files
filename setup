@@ -3,13 +3,19 @@
 #SESSION="smarkets-dev"
 
 #   ----------------------
-#   |          |     2    |			
+#   |          |     3    |			
 #   |    1     | ---------|
 #   |----------|     4    |
-#   |    3     | ---------|
+#   |    2     | ---------|
 #   |          |     5    |
 #   ----------------------
 
+#1: event-manager
+#2: api
+#3: mapper
+#4: neomin
+#5: snowflakes
+#6: paver replay_event
 #tmux new-session \; \
 # 	send-keys 'dev; cd smarkets/services/events/event-manager; paver shell;' \; \
 #	send-keys Enter \; \
@@ -19,22 +25,36 @@
 #	send-keys Enter \; \
 # 	split-window -h \; \
 
-tmux new-session \; \
-	split -h \; \
-	split -h \; \
-	split -h \; \
-	split -h \; \
-	select-layout main-vertical \; \
+#tmux new-session \; \
+#	split -h \; \
+#	split -h \; \
+#	split -h \; \
+#	split -h \; \
+#	select-layout main-vertical \; \
+new-session
+for 4: split -h
+select-layout main-vertical
+select-pane -t 1
+split -v
+
+1: dev; cd ~/smarkets/services/events/event-manager; paver shell
+2: dev; cd ~/smarkets/services/events/api; paver shell
+3: dev; cd ~/smarkets/services/events/mapper; paver shell
+4: dev; cd ~/smarkets/services/cscs/neomin; paver shell
+5: dev; cd ~/smarkets/services/events/snowflakes; nix-shell
+6: dev; cd ~/smarkets/services/events/
+1: dev; ./app
+
 #for i in {1..5}
 #do
 #	tmux split -h \;
 #done
 
-split -h x5
-send C-a M-4
-send key M-4
-event-manager
-split -h
-select 1
-api
-select 3
+#split -h x5
+#send C-a M-4
+#send key M-4
+#event-manager
+#split -h
+#select 1
+#api
+#select 3
